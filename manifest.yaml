@@ -1,0 +1,8 @@
+applications:
+  - name: proyectoia
+    random-route: true
+    memory: 512M
+    disk_quota: 1G
+    command: python main.py
+    docker:
+      image: fmancilla00/proyectoai:latest

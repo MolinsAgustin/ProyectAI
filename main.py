@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from db_agent import invocar_agente
 from chart_model import generar_grafico
+from config import load_config
 
 app = Flask(__name__)
 

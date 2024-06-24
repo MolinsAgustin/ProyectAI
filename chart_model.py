@@ -3,6 +3,13 @@ from langchain_openai import ChatOpenAI
 from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain_experimental.tools.python.tool import PythonREPL
 from typing import Optional
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+# Get the OpenAI API key from environment variable
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 class Grafico(BaseModel):
     """Informacion para la generación de un gráfico si corresponde."""
@@ -21,7 +28,7 @@ prompt_template = PromptTemplate(
     template=template_grafico, input_variables=["informacion"]
 )
 
-llm2 = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo")
+llm2 = ChatOpenAI(temperature=0, model_name="gpt-3.5-turbo", api_key=openai_api_key)
 
 structured_llm = llm2.with_structured_output(schema=Grafico)
 
