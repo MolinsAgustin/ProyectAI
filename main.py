@@ -2,8 +2,11 @@ from flask import Flask, request, jsonify
 from db_agent import invocar_agente
 from chart_model import generar_imagen_codificada
 from config import load_config
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/consulta', methods=['POST'])
 def procesar_consulta():

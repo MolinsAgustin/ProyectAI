@@ -12,7 +12,7 @@ def main():
         informacion = output["output"]
         # Generar un posible código de gráfico
         img_64 = generar_imagen_codificada(informacion, user_input)
-        print(img_64)
+        print(informacion)
 
 if __name__ == '__main__':
     load_config()

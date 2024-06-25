@@ -25,6 +25,36 @@ template_grafico = """Eres experto en python y en analisis de datos.
             El codigo debe generar una funcion que genere el grafico y retornarlo como un buffer de bytes. La ejecucion de este codigo a posterior sera almacenado en una variable,
             por lo que debe ser importante que la funcion retorne el buffer de bytes.
             Informacion: {informacion}
+
+            El codigo generado debe tener una estructura similar a la siguiente:
+
+            import matplotlib.pyplot as plt
+            import io
+
+            def generar_grafico():
+                # Datos de ejemplo
+                nombre_datos = [ ] #Crear lista con los elementos necesarios
+                datos = [ ] #Crear lista con los elementos necesarios
+                
+                # Crear la figura y el gráfico de barras horizontales
+                plt.figure(figsize=(6, 4))
+
+                # agregar estilos segun corresponda
+                
+                plt.xticks(rotation=90)
+                plt.xlabel('Agregar texto eje x')
+                plt.ylabel('Agregar texto eje y')
+                plt.title('Agregar titulo')
+                plt.tight_layout()
+                
+                
+                # Guardar el gráfico en un buffer
+                buffer = io.BytesIO()
+                plt.savefig(buffer, format='png')
+                buffer.seek(0)
+                
+                return buffer
+                
             Adicionalmente te envío la consulta original del usuario, para ayudarte a determinar si es necesario o no un grafico: {consulta}. 
             Eres a su vez diseñador grafico, por lo tanto el grafico debe quedar bonito, debe quedar con estilo empresarial y pero elegante.
             IMPORTANTE el grafico debe ser muy pequeño.
@@ -63,12 +93,14 @@ def codificar_imagen(buf):
 
 def generar_imagen_codificada(informacion,consulta):
     codigo, nombre_func = generar_codigo_grafico(informacion, consulta)
-    exec(codigo)
-    nombre_func = nombre_func + '()'
-    buffer = eval(nombre_func)
-    img_64 = codificar_imagen(buffer)
-    print(img_64)
-    return img_64
+    if codigo:
+        exec(codigo)
+        nombre_func = nombre_func + '()'
+        buffer = eval(nombre_func)
+        img_64 = codificar_imagen(buffer)
+        print(img_64)
+        return img_64
+    return None
 
 
 def ejecutar_codigo_grafico(codigo):
