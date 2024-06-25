@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from db_agent import invocar_agente
-from chart_model import generar_grafico
+from chart_model import generar_imagen_codificada
 from config import load_config
 
 app = Flask(__name__)
@@ -15,12 +15,13 @@ def procesar_consulta():
     informacion = output["output"]
 
     # Generar un posible código de gráfico
-    output_grafico = generar_grafico(informacion, input_usuario)
+    img_64 = generar_imagen_codificada(informacion, input_usuario)
 
+    print(img_64)
     # Preparar la respuesta JSON
     response = {
         "output": informacion,
-        "grafico_generado": output_grafico
+        "grafico": img_64
     }
 
     return jsonify(response)
