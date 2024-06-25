@@ -77,9 +77,6 @@ def generar_codigo_grafico(informacion, consulta):
     nombre_func = output_grafico.funcion
     return codigo, nombre_func
 
-def generar_grafico_base64(informacion,consulta):
-    print('hola')
-
 def generar_buffer_bytes_img(informacion,consulta):
     codigo, nombre_func = generar_codigo_grafico(informacion, consulta)
     ejecutar_codigo_grafico(codigo)
@@ -94,12 +91,15 @@ def codificar_imagen(buf):
 def generar_imagen_codificada(informacion,consulta):
     codigo, nombre_func = generar_codigo_grafico(informacion, consulta)
     if codigo:
-        exec(codigo)
-        nombre_func = nombre_func + '()'
-        buffer = eval(nombre_func)
-        img_64 = codificar_imagen(buffer)
-        print(img_64)
-        return img_64
+        try:
+            exec(codigo)
+            nombre_func = nombre_func + '()'
+            buffer = eval(nombre_func)
+            img_64 = codificar_imagen(buffer)
+            print(img_64)
+            return img_64
+        except:
+            pass
     return None
 
 
